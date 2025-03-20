@@ -1,4 +1,4 @@
-namespace Laba1
+namespace GraphicEditor
 {
     internal static class Program
     {

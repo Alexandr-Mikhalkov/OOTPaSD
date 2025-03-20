@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Laba1
+namespace GraphicEditor
 {
     public abstract class Shape
     {
-        public Color penColor { get; set; }
-        public Color brushColor { get; set; }
-        public int penWidth { get; set; }
-        public Point position { get; set; }
+        protected Color penColor { get; set; }
+        protected Color brushColor { get; set; }
+        protected int penWidth { get; set; }
+        protected Point position { get; set; }
+
+        public Shape(Color penColor, int penWidth)
+        {
+            this.penColor = penColor;
+            this.penWidth = penWidth;
+        }
+
         public abstract void Draw(Graphics g);
+        public abstract void UpdateState(Point currentPos);
     }
 }
