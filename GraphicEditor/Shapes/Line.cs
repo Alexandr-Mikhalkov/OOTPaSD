@@ -3,14 +3,13 @@ using System.Drawing;
 
 namespace GraphicEditor
 {
-    public class Line : Shape
+    public class Line : CommonArr
     {
         public Point endPos { get; set; }
-        
-        public Line(Color penColor, int penWidth, Point start) :base(penColor, penWidth)
+
+        public Line(Color penColor, int penWidth, Point start)
+            : base(penColor, penWidth, start)
         {
-            this.penColor = penColor;
-            this.penWidth = penWidth;
             this.position = start;
         }
 
@@ -18,7 +17,7 @@ namespace GraphicEditor
         {
             using (var pen = new Pen(penColor, penWidth))
             {
-                g.DrawLine(pen, position, endPos); 
+                g.DrawLine(pen, position, endPos);
             }
         }
 

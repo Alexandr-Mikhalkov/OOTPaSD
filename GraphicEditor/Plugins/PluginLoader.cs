@@ -6,7 +6,7 @@ namespace GraphicEditor
 {
     public static class PluginLoader
     {
-        public static void LoadPlugins(string directoryPath)
+        public static void loadPlugins(string directoryPath)
         {
             throw new NotImplementedException("Not implemented.");
         }

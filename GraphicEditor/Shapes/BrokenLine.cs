@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 
 namespace GraphicEditor
 {
-    public class BrokenLine : Shape
+    public class BrokenLine : CommonArr
     {
-        private List<Point> points;
-
-        public BrokenLine(Color penColor, int penWidth, Point startPoint) : base(penColor, penWidth)
+        public BrokenLine(Color penColor, int penWidth, Point startPoint)
+            : base(penColor, penWidth, startPoint)
         {
-            points = new List<Point> { startPoint };
         }
 
         public override void Draw(Graphics g)
@@ -22,23 +21,6 @@ namespace GraphicEditor
                     g.DrawLines(pen, points.ToArray());
                 }
             }
-        }
-
-        public override void UpdateState(Point currentPos)
-        {
-            if (points.Count == 1)
-            {
-                points.Add(currentPos);
-            }
-            else
-            {
-                points[points.Count - 1] = currentPos;
-            }
-        }
-
-        public void AddPoint(Point newPoint)
-        {
-            points.Add(newPoint);
         }
     }
 }

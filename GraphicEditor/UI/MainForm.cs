@@ -21,12 +21,11 @@ namespace GraphicEditor
         public MainForm()
         {
             InitializeComponent();
-            ColorButtonCreator colorButtonCreator = new ColorButtonCreator(colorPanel);
-            colorButtonCreator.CreateColorButtons();
-            shape = ShapeFactory.InitializeShapeFactory(colorButtonCreator.PenColorButton, colorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
+            ColorButtonCreator.CreateColorButtons(colorPanel);
+            shape = ShapeFactory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
         }
 
-        private void pictureBox_Paint(object sender, PaintEventArgs e)
+        private void PictureBoxPaint(object sender, PaintEventArgs e)
         {
             if (loadedImage != null)
             {
@@ -50,13 +49,13 @@ namespace GraphicEditor
             }
         }
 
-        private void clearButton_Click(object sender, EventArgs e)
+        private void ClearButtonClick(object sender, EventArgs e)
         {
             shapes = new Shape[0];
             pictureBox.Invalidate();
         }
 
-        private void pictureBox_MouseDown(object sender, MouseEventArgs e)
+        private void PictureBoxMouseDown(object sender, MouseEventArgs e)
         {
             if (!isDrawing)
             {
@@ -74,7 +73,7 @@ namespace GraphicEditor
             }
         }
 
-        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        private void PictureBoxMouseMove(object sender, MouseEventArgs e)
         {
             if (isDrawing && currentShape != null)
             {
@@ -83,7 +82,7 @@ namespace GraphicEditor
             }
         }
 
-        private void pictureBox_MouseUp(object sender, MouseEventArgs e)
+        private void PictureBoxMouseUp(object sender, MouseEventArgs e)
         {
             if (isDrawing && currentShape != null && !isBrokenDrawing)
             {
@@ -127,44 +126,44 @@ namespace GraphicEditor
             }
         }
 
-        private void lineButton_Click(object sender, EventArgs e)
+        private void LineButtonClick(object sender, EventArgs e)
         {
             currentShapeType = "Line";
         }
 
-        private void rectangleButton_Click(object sender, EventArgs e)
+        private void RectangleButtonClick(object sender, EventArgs e)
         {
             currentShapeType = "RectangleF";
         }
 
-        private void ellipseButton_Click(object sender, EventArgs e)
+        private void EllipseButtonClick(object sender, EventArgs e)
         {
             currentShapeType = "Ellipse";
         }
 
-        private void polygonButton_Click(object sender, EventArgs e)
+        private void PolygonButtonClick(object sender, EventArgs e)
         {
             currentShapeType = "Polygon";
             countTrackBar.Visible = true;
         }
 
-        private void brokenLineButton_Click(object sender, EventArgs e)
+        private void BrokenLineButtonClick(object sender, EventArgs e)
         {
             currentShapeType = "BrokenLine";
             isBrokenDrawing = true;
         }
 
-        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void UndoToolStripMenuItemClick(object sender, EventArgs e)
         {
             Undo();
         }
 
-        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RedoToolStripMenuItemClick(object sender, EventArgs e)
         {
             Redo();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveFile(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
@@ -200,7 +199,7 @@ namespace GraphicEditor
             }
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenFile(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
@@ -222,17 +221,17 @@ namespace GraphicEditor
             }
         }
 
-        private void widthTrackBar_ValueChanged(object sender, EventArgs e)
+        private void WidthTrackBarValueChanged(object sender, EventArgs e)
         {
             trackToolTip.SetToolTip(widthTrackBar, $"Width: {widthTrackBar.Value}");
         }
 
-        private void countTrackBar_ValueChanged(object sender, EventArgs e)
+        private void CountTrackBarValueChanged(object sender, EventArgs e)
         {
             countToolTip.SetToolTip(countTrackBar, $"Count: {countTrackBar.Value}");
         }
 
-        private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void PictureBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && isDrawing && currentShape is BrokenLine)
             {

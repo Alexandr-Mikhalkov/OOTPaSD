@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 
 namespace GraphicEditor
 {
-    public class Polygon : Shape
+    public class Polygon : CommonArr
     {
-        private List<Point> points;
         private int numSides;
         private Point center;
         private int width = 0;
         private int height = 0;
 
-        public Polygon(Color penColor, Color brushColor, int penWidth, Point center, int numSides) :base(penColor, penWidth)
+        public Polygon(Color penColor, Color brushColor, int penWidth, Point center, int numSides)
+            : base(penColor, penWidth, center)
         {
             this.brushColor = brushColor;
             this.numSides = numSides;
@@ -26,7 +27,7 @@ namespace GraphicEditor
             double initialAngle = -Math.PI / 2;
 
             for (int i = 0; i < numSides; i++)
-            {   
+            {
                 double angle = initialAngle + i * angleStep;
                 int x = center.X + (int)(Math.Cos(angle) * width / 2);
                 int y = center.Y + (int)(Math.Sin(angle) * height / 2);

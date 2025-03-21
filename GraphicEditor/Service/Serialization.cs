@@ -6,7 +6,7 @@ namespace GraphicEditor
 {
     public static class Serialization
     {
-        public static void SaveShapes(string filePath, Shape[] shapes)
+        public static void saveShapes(string filePath, Shape[] shapes)
         {
             throw new NotImplementedException("Not implemented.");
         }

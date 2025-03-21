@@ -79,11 +79,11 @@
             pictureBox.Size = new Size(955, 554);
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
-            pictureBox.Paint += pictureBox_Paint;
-            pictureBox.MouseDoubleClick += pictureBox_MouseDoubleClick;
-            pictureBox.MouseDown += pictureBox_MouseDown;
-            pictureBox.MouseMove += pictureBox_MouseMove;
-            pictureBox.MouseUp += pictureBox_MouseUp;
+            pictureBox.Paint += PictureBoxPaint;
+            pictureBox.MouseDoubleClick += PictureBoxMouseDoubleClick;
+            pictureBox.MouseDown += PictureBoxMouseDown;
+            pictureBox.MouseMove += PictureBoxMouseMove;
+            pictureBox.MouseUp += PictureBoxMouseUp;
             // 
             // clearButton
             // 
@@ -94,7 +94,7 @@
             clearButton.TabIndex = 2;
             clearButton.Text = "Clear";
             clearButton.UseVisualStyleBackColor = true;
-            clearButton.Click += clearButton_Click;
+            clearButton.Click += ClearButtonClick;
             // 
             // mainPanel
             // 
@@ -119,7 +119,7 @@
             countTrackBar.TabIndex = 6;
             countTrackBar.TickStyle = TickStyle.None;
             countTrackBar.Value = 5;
-            countTrackBar.ValueChanged += countTrackBar_ValueChanged;
+            countTrackBar.ValueChanged += CountTrackBarValueChanged;
             // 
             // colorPanel
             // 
@@ -186,7 +186,7 @@
             lineButton.TabIndex = 0;
             lineButton.TextImageRelation = TextImageRelation.ImageAboveText;
             lineButton.UseVisualStyleBackColor = false;
-            lineButton.Click += lineButton_Click;
+            lineButton.Click += LineButtonClick;
             // 
             // rectangleButton
             // 
@@ -201,7 +201,7 @@
             rectangleButton.TabIndex = 1;
             rectangleButton.TextImageRelation = TextImageRelation.ImageAboveText;
             rectangleButton.UseVisualStyleBackColor = false;
-            rectangleButton.Click += rectangleButton_Click;
+            rectangleButton.Click += RectangleButtonClick;
             // 
             // ellipseButton
             // 
@@ -216,7 +216,7 @@
             ellipseButton.TabIndex = 2;
             ellipseButton.TextImageRelation = TextImageRelation.ImageAboveText;
             ellipseButton.UseVisualStyleBackColor = false;
-            ellipseButton.Click += ellipseButton_Click;
+            ellipseButton.Click += EllipseButtonClick;
             // 
             // polygonButton
             // 
@@ -231,7 +231,7 @@
             polygonButton.TabIndex = 3;
             polygonButton.TextImageRelation = TextImageRelation.ImageAboveText;
             polygonButton.UseVisualStyleBackColor = false;
-            polygonButton.Click += polygonButton_Click;
+            polygonButton.Click += PolygonButtonClick;
             // 
             // brokenLineButton
             // 
@@ -245,7 +245,7 @@
             brokenLineButton.TabIndex = 4;
             brokenLineButton.TextImageRelation = TextImageRelation.ImageAboveText;
             brokenLineButton.UseVisualStyleBackColor = false;
-            brokenLineButton.Click += brokenLineButton_Click;
+            brokenLineButton.Click += BrokenLineButtonClick;
             // 
             // menuStrip
             // 
@@ -279,7 +279,7 @@
             openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
             openToolStripMenuItem.Size = new Size(256, 34);
             openToolStripMenuItem.Text = "Open";
-            openToolStripMenuItem.Click += openToolStripMenuItem_Click;
+            openToolStripMenuItem.Click += OpenFile;
             // 
             // toolStripSeparator1
             // 
@@ -293,7 +293,7 @@
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
             saveToolStripMenuItem.Size = new Size(256, 34);
             saveToolStripMenuItem.Text = "Save";
-            saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
+            saveToolStripMenuItem.Click += SaveFile;
             // 
             // serializeToolStripMenuItem
             // 
@@ -332,7 +332,7 @@
             undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             undoToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Z;
             undoToolStripMenuItem.Size = new Size(40, 29);
-            undoToolStripMenuItem.Click += undoToolStripMenuItem_Click;
+            undoToolStripMenuItem.Click += UndoToolStripMenuItemClick;
             // 
             // redoToolStripMenuItem
             // 
@@ -340,7 +340,7 @@
             redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             redoToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Y;
             redoToolStripMenuItem.Size = new Size(40, 29);
-            redoToolStripMenuItem.Click += redoToolStripMenuItem_Click;
+            redoToolStripMenuItem.Click += RedoToolStripMenuItemClick;
             // 
             // widthTrackBar
             // 
@@ -353,7 +353,7 @@
             widthTrackBar.TabIndex = 5;
             widthTrackBar.TickStyle = TickStyle.None;
             widthTrackBar.Value = 1;
-            widthTrackBar.ValueChanged += widthTrackBar_ValueChanged;
+            widthTrackBar.ValueChanged += WidthTrackBarValueChanged;
             // 
             // contextMenuStrip
             // 

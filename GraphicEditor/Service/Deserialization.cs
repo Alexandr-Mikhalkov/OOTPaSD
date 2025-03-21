@@ -6,7 +6,7 @@ namespace GraphicEditor
 {
     public static class Deserialization
     {
-        public static Shape[] LoadShapes(string filePath)
+        public static Shape[] loadShapes(string filePath)
         {
             throw new NotImplementedException("Not implemented.");
         }
