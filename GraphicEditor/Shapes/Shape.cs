@@ -4,13 +4,6 @@ using System.Text.Json.Serialization;
 
 namespace GraphicEditor
 {
-    [JsonPolymorphic(TypeDiscriminatorPropertyName = "Type")] // Указываем, что класс полиморфный
-    [JsonDerivedType(typeof(Line), "Line")]
-    [JsonDerivedType(typeof(RectangleF), "Rectangle")]
-    [JsonDerivedType(typeof(Ellipse), "Ellipse")]
-    [JsonDerivedType(typeof(Polygon), "Polygon")]
-    [JsonDerivedType(typeof(BrokenLine), "BrokenLine")]
-
     public abstract class Shape
     {
         protected Color penColor { get; set; }
