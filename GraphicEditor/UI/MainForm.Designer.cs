@@ -33,6 +33,9 @@
             pictureBox = new PictureBox();
             clearButton = new Button();
             mainPanel = new Panel();
+            angleCountLabel = new Label();
+            pluginLabel = new Label();
+            pluginPanel = new FlowLayoutPanel();
             countTrackBar = new TrackBar();
             colorPanel = new Panel();
             colorLabel = new Label();
@@ -88,7 +91,7 @@
             // clearButton
             // 
             clearButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            clearButton.Location = new Point(1076, 517);
+            clearButton.Location = new Point(1080, 418);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(96, 71);
             clearButton.TabIndex = 2;
@@ -100,6 +103,9 @@
             // 
             mainPanel.BackColor = Color.DarkGray;
             mainPanel.BorderStyle = BorderStyle.FixedSingle;
+            mainPanel.Controls.Add(angleCountLabel);
+            mainPanel.Controls.Add(pluginLabel);
+            mainPanel.Controls.Add(pluginPanel);
             mainPanel.Controls.Add(countTrackBar);
             mainPanel.Controls.Add(colorPanel);
             mainPanel.Controls.Add(panel1);
@@ -109,9 +115,35 @@
             mainPanel.Size = new Size(1184, 135);
             mainPanel.TabIndex = 4;
             // 
+            // angleCountLabel
+            // 
+            angleCountLabel.AutoSize = true;
+            angleCountLabel.Location = new Point(61, 99);
+            angleCountLabel.Name = "angleCountLabel";
+            angleCountLabel.Size = new Size(111, 25);
+            angleCountLabel.TabIndex = 8;
+            angleCountLabel.Text = "Angle Count";
+            // 
+            // pluginLabel
+            // 
+            pluginLabel.AutoSize = true;
+            pluginLabel.Location = new Point(1018, 99);
+            pluginLabel.Name = "pluginLabel";
+            pluginLabel.Size = new Size(69, 25);
+            pluginLabel.TabIndex = 3;
+            pluginLabel.Text = "Plugins";
+            pluginLabel.Visible = false;
+            // 
+            // pluginPanel
+            // 
+            pluginPanel.Location = new Point(922, 5);
+            pluginPanel.Name = "pluginPanel";
+            pluginPanel.Size = new Size(253, 85);
+            pluginPanel.TabIndex = 7;
+            // 
             // countTrackBar
             // 
-            countTrackBar.Location = new Point(26, 37);
+            countTrackBar.Location = new Point(25, 41);
             countTrackBar.Maximum = 25;
             countTrackBar.Minimum = 5;
             countTrackBar.Name = "countTrackBar";
@@ -170,7 +202,7 @@
             shapeFlowPanel.Controls.Add(brokenLineButton);
             shapeFlowPanel.Location = new Point(8, 5);
             shapeFlowPanel.Name = "shapeFlowPanel";
-            shapeFlowPanel.Size = new Size(262, 85);
+            shapeFlowPanel.Size = new Size(265, 85);
             shapeFlowPanel.TabIndex = 0;
             // 
             // lineButton
@@ -269,7 +301,7 @@
             newToolStripMenuItem.Image = (Image)resources.GetObject("newToolStripMenuItem.Image");
             newToolStripMenuItem.Name = "newToolStripMenuItem";
             newToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
-            newToolStripMenuItem.Size = new Size(256, 34);
+            newToolStripMenuItem.Size = new Size(270, 34);
             newToolStripMenuItem.Text = "New";
             // 
             // openToolStripMenuItem
@@ -277,21 +309,21 @@
             openToolStripMenuItem.Image = (Image)resources.GetObject("openToolStripMenuItem.Image");
             openToolStripMenuItem.Name = "openToolStripMenuItem";
             openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            openToolStripMenuItem.Size = new Size(256, 34);
+            openToolStripMenuItem.Size = new Size(270, 34);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += OpenFile;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(253, 6);
+            toolStripSeparator1.Size = new Size(267, 6);
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Image = (Image)resources.GetObject("saveToolStripMenuItem.Image");
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(256, 34);
+            saveToolStripMenuItem.Size = new Size(270, 34);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += SaveFile;
             // 
@@ -300,16 +332,18 @@
             serializeToolStripMenuItem.Image = (Image)resources.GetObject("serializeToolStripMenuItem.Image");
             serializeToolStripMenuItem.Name = "serializeToolStripMenuItem";
             serializeToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.S;
-            serializeToolStripMenuItem.Size = new Size(256, 34);
+            serializeToolStripMenuItem.Size = new Size(270, 34);
             serializeToolStripMenuItem.Text = "Serialize";
+            serializeToolStripMenuItem.Click += SerializeToolStripMenuItemClick;
             // 
             // deserializeToolStripMenuItem
             // 
             deserializeToolStripMenuItem.Image = (Image)resources.GetObject("deserializeToolStripMenuItem.Image");
             deserializeToolStripMenuItem.Name = "deserializeToolStripMenuItem";
             deserializeToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.D;
-            deserializeToolStripMenuItem.Size = new Size(256, 34);
+            deserializeToolStripMenuItem.Size = new Size(270, 34);
             deserializeToolStripMenuItem.Text = "Deserialize";
+            deserializeToolStripMenuItem.Click += DeserializeToolStripMenuItemClick;
             // 
             // pluginsToolStripMenuItem
             // 
@@ -325,6 +359,7 @@
             loadToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.L;
             loadToolStripMenuItem.Size = new Size(212, 34);
             loadToolStripMenuItem.Text = "Load";
+            loadToolStripMenuItem.Click += LoadToolStripMenuItemClick;
             // 
             // undoToolStripMenuItem
             // 
@@ -426,5 +461,8 @@
         private ContextMenuStrip contextMenuStrip;
         private ToolTip trackToolTip;
         private ToolTip countToolTip;
+        private FlowLayoutPanel pluginPanel;
+        private Label pluginLabel;
+        private Label angleCountLabel;
     }
 }

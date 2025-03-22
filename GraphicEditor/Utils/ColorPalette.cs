@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace GraphicEditor.Utils
+namespace GraphicEditor
 {
     public static class ColorPalette
     {

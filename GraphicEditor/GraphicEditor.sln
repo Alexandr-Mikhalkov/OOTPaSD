@@ -5,6 +5,10 @@ VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicEditor", "GraphicEditor.csproj", "{FAAEF77D-1D8C-4642-979D-DEC79A4C5BC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarPlugin", "..\Star\StarPlugin.csproj", "{B90E9D3F-CF59-4427-954D-34B742DFE08B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrianglePlugin", "..\Triangle\TrianglePlugin.csproj", "{91D2EF5D-1F56-4329-95AE-CBE18CB31EFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{FAAEF77D-1D8C-4642-979D-DEC79A4C5BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAAEF77D-1D8C-4642-979D-DEC79A4C5BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAAEF77D-1D8C-4642-979D-DEC79A4C5BC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B90E9D3F-CF59-4427-954D-34B742DFE08B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B90E9D3F-CF59-4427-954D-34B742DFE08B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B90E9D3F-CF59-4427-954D-34B742DFE08B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B90E9D3F-CF59-4427-954D-34B742DFE08B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91D2EF5D-1F56-4329-95AE-CBE18CB31EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91D2EF5D-1F56-4329-95AE-CBE18CB31EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91D2EF5D-1F56-4329-95AE-CBE18CB31EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91D2EF5D-1F56-4329-95AE-CBE18CB31EFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

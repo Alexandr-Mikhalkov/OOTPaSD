@@ -41,6 +41,19 @@ namespace GraphicEditor
                     {
                         args = new object[] { penColorButton.BackColor, brushColorButton.BackColor, widthTrackBar.Value, startPos, countTrackBar.Value };
                     }
+                    else if (parameters.Length == 7)
+                    {
+                        args = new object[]
+                        {
+                            penColorButton.BackColor,
+                            brushColorButton.BackColor,
+                            widthTrackBar.Value,
+                            startPos,
+                            countTrackBar.Value, 
+                            100,                 
+                            50                
+                        };
+                    }
                     else
                     {
                         throw new InvalidOperationException($"Unknown constructor: {shapeClassType.Name}");

@@ -32,7 +32,6 @@ namespace GraphicEditor
                 e.Graphics.DrawImage(loadedImage, 0, 0);
             }
 
-            // delete nado bydet
             foreach (Shape shape in shapes)
             {
                 shape.Draw(e.Graphics);
@@ -41,11 +40,6 @@ namespace GraphicEditor
             if (currentShape != null)
             {
                 currentShape.Draw(e.Graphics);
-            }
-
-            if (currentShapeType != "Polygon")
-            {
-                countTrackBar.Visible = false;
             }
         }
 
@@ -144,7 +138,6 @@ namespace GraphicEditor
         private void PolygonButtonClick(object sender, EventArgs e)
         {
             currentShapeType = "Polygon";
-            countTrackBar.Visible = true;
         }
 
         private void BrokenLineButtonClick(object sender, EventArgs e)
@@ -237,6 +230,42 @@ namespace GraphicEditor
             {
                 isBrokenDrawing = false;
             }
+        }
+
+        private void LoadToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "DLL Files|*.dll",
+                Title = "Выберите плагин"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string pluginFile = openFileDialog.FileName;
+
+                PluginLoader pluginLoader = new PluginLoader();
+                pluginLoader.ShapeButtonClicked += OnShapeButtonClicked;
+                pluginLoader.LoadPluginFromFile(pluginFile, pluginPanel);
+                pluginLabel.Visible = true;
+                pluginPanel.BorderStyle = BorderStyle.FixedSingle;
+            }
+        }
+
+        private void OnShapeButtonClicked(string shapeType)
+        {
+            currentShapeType = shapeType;
+            shape = ShapeFactory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
+        }
+
+        private void SerializeToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void DeserializeToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            
         }
     }
 }
