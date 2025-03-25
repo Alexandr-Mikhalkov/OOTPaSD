@@ -8,8 +8,8 @@ namespace GraphicEditor
     {
         private JsonSerializerOptions options = new JsonSerializerOptions
         {
-            WriteIndented = true, // Форматируем JSON для удобства
-            IncludeFields = true // Включаем приватные поля
+            WriteIndented = true, 
+            IncludeFields = true 
         };
 
         public void SaveShapes(string filePath, Shape[] shapes)
@@ -21,7 +21,7 @@ namespace GraphicEditor
             }
             catch (Exception ex)
             {
-                throw new Exception($"Ошибка при сохранении: {ex.Message}");
+                throw new Exception($"ГЋГёГЁГЎГЄГ  ГЇГ°ГЁ Г±Г®ГµГ°Г Г­ГҐГ­ГЁГЁ: {ex.Message}");
             }
         }
     }
