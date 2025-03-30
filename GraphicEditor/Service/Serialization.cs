@@ -1,11 +1,12 @@
 using System;
-using System.IO;
-using System.Text.Json;
 
 namespace GraphicEditor
 {
     public class Serialization
     {
-
+        public void SaveShapes(string filePath, Shape[] shapes)
+        {
+            throw new NotImplementedException("Not implemented.");
+        }
     }
 }

@@ -63,6 +63,7 @@
             contextMenuStrip = new ContextMenuStrip(components);
             trackToolTip = new ToolTip(components);
             countToolTip = new ToolTip(components);
+            widthLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)countTrackBar).BeginInit();
@@ -301,7 +302,7 @@
             newToolStripMenuItem.Image = (Image)resources.GetObject("newToolStripMenuItem.Image");
             newToolStripMenuItem.Name = "newToolStripMenuItem";
             newToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
-            newToolStripMenuItem.Size = new Size(270, 34);
+            newToolStripMenuItem.Size = new Size(256, 34);
             newToolStripMenuItem.Text = "New";
             // 
             // openToolStripMenuItem
@@ -309,21 +310,21 @@
             openToolStripMenuItem.Image = (Image)resources.GetObject("openToolStripMenuItem.Image");
             openToolStripMenuItem.Name = "openToolStripMenuItem";
             openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            openToolStripMenuItem.Size = new Size(270, 34);
+            openToolStripMenuItem.Size = new Size(256, 34);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += OpenFile;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(267, 6);
+            toolStripSeparator1.Size = new Size(253, 6);
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Image = (Image)resources.GetObject("saveToolStripMenuItem.Image");
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(270, 34);
+            saveToolStripMenuItem.Size = new Size(256, 34);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += SaveFile;
             // 
@@ -332,7 +333,7 @@
             serializeToolStripMenuItem.Image = (Image)resources.GetObject("serializeToolStripMenuItem.Image");
             serializeToolStripMenuItem.Name = "serializeToolStripMenuItem";
             serializeToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.S;
-            serializeToolStripMenuItem.Size = new Size(270, 34);
+            serializeToolStripMenuItem.Size = new Size(256, 34);
             serializeToolStripMenuItem.Text = "Serialize";
             serializeToolStripMenuItem.Click += SerializeToolStripMenuItemClick;
             // 
@@ -341,7 +342,7 @@
             deserializeToolStripMenuItem.Image = (Image)resources.GetObject("deserializeToolStripMenuItem.Image");
             deserializeToolStripMenuItem.Name = "deserializeToolStripMenuItem";
             deserializeToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.D;
-            deserializeToolStripMenuItem.Size = new Size(270, 34);
+            deserializeToolStripMenuItem.Size = new Size(256, 34);
             deserializeToolStripMenuItem.Text = "Deserialize";
             deserializeToolStripMenuItem.Click += DeserializeToolStripMenuItemClick;
             // 
@@ -396,12 +397,23 @@
             contextMenuStrip.Name = "contextMenuStrip1";
             contextMenuStrip.Size = new Size(61, 4);
             // 
+            // widthLabel
+            // 
+            widthLabel.AutoSize = true;
+            widthLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            widthLabel.Location = new Point(26, 697);
+            widthLabel.Name = "widthLabel";
+            widthLabel.Size = new Size(60, 25);
+            widthLabel.TabIndex = 6;
+            widthLabel.Text = "Width";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DimGray;
             ClientSize = new Size(1184, 792);
+            Controls.Add(widthLabel);
             Controls.Add(widthTrackBar);
             Controls.Add(mainPanel);
             Controls.Add(clearButton);
@@ -410,6 +422,8 @@
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Graphic Editor";
@@ -464,5 +478,6 @@
         private FlowLayoutPanel pluginPanel;
         private Label pluginLabel;
         private Label angleCountLabel;
+        private Label widthLabel;
     }
 }
