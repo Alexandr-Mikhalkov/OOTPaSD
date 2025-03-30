@@ -2,14 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace GraphicEditor
 {
-    public static class ShapeFactory
+    public class ShapeFactory
     {
-        public static Dictionary<string, Func<Point, Shape>> InitializeShapeFactory(Button penColorButton, Button brushColorButton, TrackBar widthTrackBar, TrackBar countTrackBar)
+        public Dictionary<string, Func<Point, Shape>> InitializeShapeFactory(Button penColorButton, Button brushColorButton, TrackBar widthTrackBar, TrackBar countTrackBar)
         {
-            var shape = new Dictionary<string, Func<Point, Shape>>();
+            var shapeFactories = new Dictionary<string, Func<Point, Shape>>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
@@ -24,48 +26,46 @@ namespace GraphicEditor
 
                 Func<Point, Shape> shapeFactory = (startPos) =>
                 {
-                    ConstructorInfo constructor = shapeClassType.GetConstructors().FirstOrDefault();
+                    ConstructorInfo constructor = shapeClassType.GetConstructors().First(); 
+                    if (constructor == null)
+                        throw new InvalidOperationException($"No constructor found for {shapeClassType.Name}");
+
                     ParameterInfo[] parameters = constructor.GetParameters();
+                    object[] args = new object[parameters.Length];
 
-                    object[] args;
-
-                    if (parameters.Length == 3)
+                    foreach (var param in parameters)
                     {
-                        args = new object[] { penColorButton.BackColor, widthTrackBar.Value, startPos };
-                    }
-                    else if (parameters.Length == 4)
-                    {
-                        args = new object[] { penColorButton.BackColor, brushColorButton.BackColor, widthTrackBar.Value, startPos };
-                    }
-                    else if (parameters.Length == 5)
-                    {
-                        args = new object[] { penColorButton.BackColor, brushColorButton.BackColor, widthTrackBar.Value, startPos, countTrackBar.Value };
-                    }
-                    else if (parameters.Length == 7)
-                    {
-                        args = new object[]
+                        if (param.ParameterType == typeof(Color))
                         {
-                            penColorButton.BackColor,
-                            brushColorButton.BackColor,
-                            widthTrackBar.Value,
-                            startPos,
-                            countTrackBar.Value, 
-                            100,                 
-                            50                
-                        };
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException($"Unknown constructor: {shapeClassType.Name}");
+                            if (args.Contains(penColorButton.BackColor))
+                                args[param.Position] = brushColorButton.BackColor;
+                            else
+                                args[param.Position] = penColorButton.BackColor;
+                        }
+                        else if (param.ParameterType == typeof(int))
+                        {
+                            if (args.Contains(widthTrackBar.Value))
+                                args[param.Position] = countTrackBar.Value;
+                            else
+                                args[param.Position] = widthTrackBar.Value;
+                        }
+                        else if (param.ParameterType == typeof(Point))
+                        {
+                            args[param.Position] = startPos;
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException($"Undefined parameter type: {param.ParameterType.Name} in {shapeClassType.Name}");
+                        }
                     }
 
                     return (Shape)constructor.Invoke(args);
                 };
 
-                shape[className] = shapeFactory;
+                shapeFactories[className] = shapeFactory;
             }
 
-            return shape;
+            return shapeFactories;
         }
     }
 }

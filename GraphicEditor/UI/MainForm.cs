@@ -17,12 +17,13 @@ namespace GraphicEditor
         private Stack<Shape[]> redoStack = new Stack<Shape[]>();
         private Bitmap loadedImage = null;
         private Dictionary<string, Func<Point, Shape>> shape;
-
+        private ShapeFactory factory = new ShapeFactory();  
+      
         public MainForm()
         {
             InitializeComponent();
             ColorButtonCreator.CreateColorButtons(colorPanel);
-            shape = ShapeFactory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
+            shape = factory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
         }
 
         private void PictureBoxPaint(object sender, PaintEventArgs e)
@@ -37,10 +38,7 @@ namespace GraphicEditor
                 shape.Draw(e.Graphics);
             }
 
-            if (currentShape != null)
-            {
-                currentShape.Draw(e.Graphics);
-            }
+            currentShape?.Draw(e.Graphics);
         }
 
         private void ClearButtonClick(object sender, EventArgs e)
@@ -181,10 +179,7 @@ namespace GraphicEditor
                             shape.Draw(g);
                         }
 
-                        if (currentShape != null)
-                        {
-                            currentShape.Draw(g);
-                        }
+                        currentShape?.Draw(g);
                     }
 
                     bmp.Save(filePath, ImageFormat.Jpeg);
@@ -255,7 +250,7 @@ namespace GraphicEditor
         private void OnShapeButtonClicked(string shapeType)
         {
             currentShapeType = shapeType;
-            shape = ShapeFactory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
+            shape = factory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
         }
 
         private void SerializeToolStripMenuItemClick(object sender, EventArgs e)
@@ -265,7 +260,7 @@ namespace GraphicEditor
 
         private void DeserializeToolStripMenuItemClick(object sender, EventArgs e)
         {
-            
+           
         }
     }
 }
