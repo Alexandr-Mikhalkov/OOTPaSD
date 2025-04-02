@@ -7,15 +7,15 @@ namespace GraphicEditor
 {
     public partial class MainForm : Form
     {
+        private ShapeList shapeList = new ShapeList();
+        private ShapeManager shapeManager = new ShapeManager();
         private Shape[] shapes = new Shape[0];
         private bool isDrawing = false;
         private bool isBrokenDrawing = false;
         private Point startPos;
         private string currentShapeType = "Line";
-        private Shape currentShape = null;
-        private Stack<Shape[]> undoStack = new Stack<Shape[]>();
-        private Stack<Shape[]> redoStack = new Stack<Shape[]>();
-        private Bitmap loadedImage = null;
+        private Shape? currentShape = null;
+        private Bitmap loadedImage;
         private Dictionary<string, Func<Point, Shape>> shape;
         private ShapeFactory factory = new ShapeFactory();  
       
@@ -28,22 +28,13 @@ namespace GraphicEditor
 
         private void PictureBoxPaint(object sender, PaintEventArgs e)
         {
-            if (loadedImage != null)
-            {
-                e.Graphics.DrawImage(loadedImage, 0, 0);
-            }
-
-            foreach (Shape shape in shapes)
-            {
-                shape.Draw(e.Graphics);
-            }
-
+            shapeList.Draw(e.Graphics);
             currentShape?.Draw(e.Graphics);
         }
 
         private void ClearButtonClick(object sender, EventArgs e)
         {
-            shapes = new Shape[0];
+            shapeList.Clear();
             pictureBox.Invalidate();
         }
 
@@ -54,14 +45,11 @@ namespace GraphicEditor
                 isDrawing = true;
                 startPos = e.Location;
                 CreateShape(startPos);
-                AddToUndoStack();
+                shapeManager.PushToUndo(shapeList.GetShapes());
             }
-            else
+            else if (currentShapeType == "BrokenLine" && currentShape is BrokenLine brokenLine)
             {
-                if (currentShapeType == "BrokenLine" && currentShape is BrokenLine brokenLine)
-                {
-                    brokenLine.AddPoint(e.Location);
-                }
+                brokenLine.AddPoint(e.Location);
             }
         }
 
@@ -79,7 +67,7 @@ namespace GraphicEditor
             if (isDrawing && currentShape != null && !isBrokenDrawing)
             {
                 currentShape.UpdateState(e.Location);
-                shapes = shapes.Append(currentShape).ToArray();
+                shapeList.AddShape(currentShape);
                 currentShape = null;
                 isDrawing = false;
             }
@@ -89,33 +77,6 @@ namespace GraphicEditor
         private void CreateShape(Point clickLocation)
         {
             currentShape = shape[currentShapeType](clickLocation);
-        }
-
-        private void AddToUndoStack()
-        {
-            undoStack.Push((Shape[])shapes.Clone());
-        }
-
-        private void Undo()
-        {
-            if (undoStack.Count > 0)
-            {
-                redoStack.Push((Shape[])shapes.Clone());
-
-                shapes = undoStack.Pop();
-                pictureBox.Invalidate();
-            }
-        }
-
-        private void Redo()
-        {
-            if (redoStack.Count > 0)
-            {
-                undoStack.Push((Shape[])shapes.Clone());
-
-                shapes = redoStack.Pop();
-                pictureBox.Invalidate();
-            }
         }
 
         private void LineButtonClick(object sender, EventArgs e)
@@ -146,12 +107,14 @@ namespace GraphicEditor
 
         private void UndoToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Undo();
+            shapeList.SetShapes(shapeManager.Undo(shapeList.GetShapes()));
+            pictureBox.Invalidate();
         }
 
         private void RedoToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Redo();
+            shapeList.SetShapes(shapeManager.Redo(shapeList.GetShapes()));
+            pictureBox.Invalidate();
         }
 
         private void SaveFile(object sender, EventArgs e)
@@ -200,6 +163,7 @@ namespace GraphicEditor
                 try
                 {
                     loadedImage = new Bitmap(openFileDialog.FileName);
+                    shapeList.SetImage(loadedImage);
                     pictureBox.Invalidate();
                 }
                 catch (Exception ex)
