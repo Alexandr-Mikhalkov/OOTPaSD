@@ -9,7 +9,6 @@ namespace GraphicEditor
     {
         private ShapeList shapeList = new ShapeList();
         private ShapeManager shapeManager = new ShapeManager();
-        private Shape[] shapes = new Shape[0];
         private bool isDrawing = false;
         private bool isBrokenDrawing = false;
         private Point startPos;
@@ -45,7 +44,7 @@ namespace GraphicEditor
                 isDrawing = true;
                 startPos = e.Location;
                 CreateShape(startPos);
-                shapeManager.PushToUndo(shapeList.GetShapes());
+                shapeManager.PushToUndo(new List<Shape>(shapeList.GetShapes()));
             }
             else if (currentShapeType == "BrokenLine" && currentShape is BrokenLine brokenLine)
             {
@@ -137,7 +136,7 @@ namespace GraphicEditor
                     {
                         g.Clear(Color.White);
 
-                        foreach (Shape shape in shapes)
+                        foreach (Shape shape in shapeList.GetShapes())
                         {
                             shape.Draw(g);
                         }

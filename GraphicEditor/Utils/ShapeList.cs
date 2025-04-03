@@ -32,12 +32,12 @@ namespace GraphicEditor
             }
         }
 
-        public Shape[] GetShapes()
+        public List<Shape> GetShapes()
         {
-            return shapes.ToArray();
+            return new List<Shape>(shapes);
         }
 
-        public void SetShapes(Shape[] newShapes)
+        public void SetShapes(List<Shape> newShapes)
         {
             shapes = new List<Shape>(newShapes);
         }

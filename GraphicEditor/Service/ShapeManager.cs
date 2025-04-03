@@ -5,30 +5,30 @@ namespace GraphicEditor
 {
     public class ShapeManager
     {
-        private Stack<Shape[]> undoStack = new Stack<Shape[]>();
-        private Stack<Shape[]> redoStack = new Stack<Shape[]>();
+        private Stack<List<Shape>> undoStack = new Stack<List<Shape>>();
+        private Stack<List<Shape>> redoStack = new Stack<List<Shape>>();
 
-        public void PushToUndo(Shape[] shapes)
+        public void PushToUndo(List<Shape> shapes)
         {
-            undoStack.Push(shapes);
+            undoStack.Push(new List<Shape>(shapes));
             redoStack.Clear();
         }
 
-        public Shape[] Undo(Shape[] currentShapes)
+        public List<Shape> Undo(List<Shape> currentShapes)
         {
             if (undoStack.Count == 0)
-                return currentShapes;
+                return new List<Shape>(currentShapes);
 
-            redoStack.Push(currentShapes);
+            redoStack.Push(new List<Shape>(currentShapes));
             return undoStack.Pop();
         }
 
-        public Shape[] Redo(Shape[] currentShapes)
+        public List<Shape> Redo(List<Shape> currentShapes)
         {
             if (redoStack.Count == 0)
-                return currentShapes;
+                return new List<Shape>(currentShapes);
 
-            undoStack.Push(currentShapes);
+            undoStack.Push(new List<Shape>(currentShapes));
             return redoStack.Pop();
         }
 
