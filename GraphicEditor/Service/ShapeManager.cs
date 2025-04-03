@@ -11,7 +11,7 @@ namespace GraphicEditor
         public void PushToUndo(List<Shape> shapes)
         {
             undoStack.Push(new List<Shape>(shapes));
-            redoStack.Clear();
+            ClearRedo();
         }
 
         public List<Shape> Undo(List<Shape> currentShapes)
