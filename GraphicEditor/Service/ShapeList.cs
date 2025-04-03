@@ -33,12 +33,12 @@ namespace GraphicEditor
 
         public List<Shape> GetShapes()
         {
-            return new List<Shape>(shapes);
+            return [.. shapes];
         }
 
         public void SetShapes(List<Shape> newShapes)
         {
-            shapes = new List<Shape>(newShapes);
+            shapes = [.. newShapes];
         }
 
         public void SetImage(Bitmap image)

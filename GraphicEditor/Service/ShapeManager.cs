@@ -10,25 +10,25 @@ namespace GraphicEditor
 
         public void PushToUndo(List<Shape> shapes)
         {
-            undoStack.Push(new List<Shape>(shapes));
+            undoStack.Push([.. shapes]);
             ClearRedo();
         }
 
         public List<Shape> Undo(List<Shape> currentShapes)
         {
             if (undoStack.Count == 0)
-                return new List<Shape>(currentShapes);
+                return [.. currentShapes];
 
-            redoStack.Push(new List<Shape>(currentShapes));
+            redoStack.Push([.. currentShapes]);
             return undoStack.Pop();
         }
 
         public List<Shape> Redo(List<Shape> currentShapes)
         {
             if (redoStack.Count == 0)
-                return new List<Shape>(currentShapes);
+                return [.. currentShapes];
 
-            undoStack.Push(new List<Shape>(currentShapes));
+            undoStack.Push([.. currentShapes]);
             return redoStack.Pop();
         }
 

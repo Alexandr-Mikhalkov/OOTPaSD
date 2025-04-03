@@ -44,7 +44,7 @@ namespace GraphicEditor
                 isDrawing = true;
                 startPos = e.Location;
                 CreateShape(startPos);
-                shapeManager.PushToUndo(new List<Shape>(shapeList.GetShapes()));
+                shapeManager.PushToUndo(shapeList.GetShapes());
             }
             else if (currentShapeType == "BrokenLine" && currentShape is BrokenLine brokenLine)
             {
