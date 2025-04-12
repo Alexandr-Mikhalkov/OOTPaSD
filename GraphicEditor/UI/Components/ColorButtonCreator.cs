@@ -2,26 +2,26 @@ namespace GraphicEditor
 {
     public static class ColorButtonCreator
     {
-        private static Panel colorPanel;
-        private static Button penColorButton;
-        private static Button brushColorButton;
-        private static Button activeColorButton;
+        private static Panel s_colorPanel;
+        private static Button s_penColorButton;
+        private static Button s_brushColorButton;
+        private static Button s_activeColorButton;
         private static int currentColorIndex = 0;
 
         public static void CreateColorButtons(Panel panel)
         {
-            colorPanel = panel;
+            s_colorPanel = panel;
             int padding = 5;
             int startX = 10;
             int startY = 10;
 
-            penColorButton = CreateColorButton(startX, startY, Color.Black);
-            penColorButton.Click += (sender, e) => activeColorButton = penColorButton;
-            colorPanel.Controls.Add(penColorButton);
+            s_penColorButton = CreateColorButton(startX, startY, Color.Black);
+            s_penColorButton.Click += (sender, e) => s_activeColorButton = s_penColorButton;
+            s_colorPanel.Controls.Add(s_penColorButton);
 
-            brushColorButton = CreateColorButton(startX, startY + 35 + padding, Color.White);
-            brushColorButton.Click += (sender, e) => activeColorButton = brushColorButton;
-            colorPanel.Controls.Add(brushColorButton);
+            s_brushColorButton = CreateColorButton(startX, startY + 35 + padding, Color.White);
+            s_brushColorButton.Click += (sender, e) => s_activeColorButton = s_brushColorButton;
+            s_colorPanel.Controls.Add(s_brushColorButton);
 
             CreateStandardColorButtons(startX, startY, padding);
         }
@@ -57,13 +57,13 @@ namespace GraphicEditor
 
                 colorButton.Click += (sender, e) =>
                 {
-                    if (activeColorButton != null)
+                    if (s_activeColorButton != null)
                     {
-                        activeColorButton.BackColor = colorButton.BackColor;
+                        s_activeColorButton.BackColor = colorButton.BackColor;
                     }
                 };
 
-                colorPanel.Controls.Add(colorButton);
+                s_colorPanel.Controls.Add(colorButton);
 
                 if (i >= 20) inactiveButtons.Add(colorButton);
 
@@ -90,7 +90,7 @@ namespace GraphicEditor
             };
 
             selectColorButton.Click += (sender, e) => SelectCustomColor(inactiveButtons);
-            colorPanel.Controls.Add(selectColorButton);
+            s_colorPanel.Controls.Add(selectColorButton);
         }
 
         private static void SelectCustomColor(List<Button> inactiveButtons)
@@ -114,7 +114,7 @@ namespace GraphicEditor
             }
         }
 
-        public static Button PenColorButton => penColorButton;
-        public static Button BrushColorButton => brushColorButton;
+        public static Button PenColorButton => s_penColorButton;
+        public static Button BrushColorButton => s_brushColorButton;
     }
 }

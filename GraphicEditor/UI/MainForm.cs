@@ -7,46 +7,47 @@ namespace GraphicEditor
 {
     public partial class MainForm : Form
     {
-        private ShapeList shapeList = new ShapeList();
-        private ShapeManager shapeManager = new ShapeManager();
-        private bool isDrawing = false;
-        private bool isBrokenDrawing = false;
-        private Point startPos;
-        private string currentShapeType = "Line";
-        private Shape? currentShape = null;
-        private Bitmap loadedImage;
-        private Dictionary<string, Func<Point, Shape>> shape;
-        private ShapeFactory factory = new ShapeFactory();  
-      
+        private ShapeList _shapeList = new ShapeList();
+        private ShapeManager _shapeManager;
+        private FileManager _fileManager = new FileManager();
+        private bool _isDrawing = false;
+        private bool _isBrokenDrawing = false;
+        private Point _startPos;
+        private string _currentShapeType = "Line";
+        private Shape? _currentShape = null;
+        private Bitmap _loadedImage;
+        private Dictionary<string, Func<Point, Shape>> _shape;
+        private ShapeFactory _factory = new ShapeFactory();  
+        
         public MainForm()
         {
             InitializeComponent();
             ColorButtonCreator.CreateColorButtons(colorPanel);
-            shape = factory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
+            _shapeManager = new ShapeManager(_shapeList);
+            _shape = _factory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
         }
 
         private void PictureBoxPaint(object sender, PaintEventArgs e)
         {
-            shapeList.Draw(e.Graphics);
-            currentShape?.Draw(e.Graphics);
+            _shapeList.Draw(e.Graphics);
+            _currentShape?.Draw(e.Graphics);
         }
 
         private void ClearButtonClick(object sender, EventArgs e)
         {
-            shapeList.Clear();
+            _shapeList.Clear();
             pictureBox.Invalidate();
         }
 
         private void PictureBoxMouseDown(object sender, MouseEventArgs e)
         {
-            if (!isDrawing)
+            if (!_isDrawing)
             {
-                isDrawing = true;
-                startPos = e.Location;
-                CreateShape(startPos);
-                shapeManager.PushToUndo(shapeList.GetShapes());
+                _isDrawing = true;
+                _startPos = e.Location;
+                CreateShape(_startPos);
             }
-            else if (currentShapeType == "BrokenLine" && currentShape is BrokenLine brokenLine)
+            else if (_currentShapeType == "BrokenLine" && _currentShape is BrokenLine brokenLine)
             {
                 brokenLine.AddPoint(e.Location);
             }
@@ -54,121 +55,94 @@ namespace GraphicEditor
 
         private void PictureBoxMouseMove(object sender, MouseEventArgs e)
         {
-            if (isDrawing && currentShape != null)
+            if (_isDrawing && _currentShape != null)
             {
-                currentShape.UpdateState(e.Location);
+                _currentShape.UpdateState(e.Location);
                 pictureBox.Invalidate();
             }
         }
 
         private void PictureBoxMouseUp(object sender, MouseEventArgs e)
         {
-            if (isDrawing && currentShape != null && !isBrokenDrawing)
+            if (_isDrawing && _currentShape != null && !_isBrokenDrawing)
             {
-                currentShape.UpdateState(e.Location);
-                shapeList.AddShape(currentShape);
-                currentShape = null;
-                isDrawing = false;
+                _currentShape.UpdateState(e.Location);
+                _shapeManager.AddShape(_currentShape.Clone());
+                _currentShape = null;
+                _isDrawing = false;
             }
             pictureBox.Invalidate();
         }
 
         private void CreateShape(Point clickLocation)
         {
-            currentShape = shape[currentShapeType](clickLocation);
+            _currentShape = _shape[_currentShapeType](clickLocation);
         }
 
         private void LineButtonClick(object sender, EventArgs e)
         {
-            currentShapeType = "Line";
+            _currentShapeType = "Line";
         }
 
         private void RectangleButtonClick(object sender, EventArgs e)
         {
-            currentShapeType = "RectangleF";
+            _currentShapeType = "RectangleF";
         }
 
         private void EllipseButtonClick(object sender, EventArgs e)
         {
-            currentShapeType = "Ellipse";
+            _currentShapeType = "Ellipse";
         }
 
         private void PolygonButtonClick(object sender, EventArgs e)
         {
-            currentShapeType = "Polygon";
+            _currentShapeType = "Polygon";
         }
 
         private void BrokenLineButtonClick(object sender, EventArgs e)
         {
-            currentShapeType = "BrokenLine";
-            isBrokenDrawing = true;
+            _currentShapeType = "BrokenLine";
+            _isBrokenDrawing = true;
         }
 
         private void UndoToolStripMenuItemClick(object sender, EventArgs e)
         {
-            shapeList.SetShapes(shapeManager.Undo(shapeList.GetShapes()));
+            _shapeManager.Undo();
             pictureBox.Invalidate();
         }
 
         private void RedoToolStripMenuItemClick(object sender, EventArgs e)
         {
-            shapeList.SetShapes(shapeManager.Redo(shapeList.GetShapes()));
+            _shapeManager.Redo();
             pictureBox.Invalidate();
         }
 
         private void SaveFile(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            try
             {
-                Filter = "JPEG Image|*.jpg",
-                Title = "Save Image"
-            };
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                _fileManager.SaveFile(pictureBox, _shapeList, _currentShape);
+            }
+            catch (Exception ex)
             {
-                string filePath = saveFileDialog.FileName;
-                int width = pictureBox.Width;
-                int height = pictureBox.Height;
-
-                using (Bitmap bmp = new Bitmap(width, height))
-                {
-                    using (Graphics g = Graphics.FromImage(bmp))
-                    {
-                        g.Clear(Color.White);
-
-                        foreach (Shape shape in shapeList.GetShapes())
-                        {
-                            shape.Draw(g);
-                        }
-
-                        currentShape?.Draw(g);
-                    }
-
-                    bmp.Save(filePath, ImageFormat.Jpeg);
-                }
+                MessageBox.Show($"Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void OpenFile(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            try
             {
-                Filter = "JPEG Image|*.jpg|All Files|*.*",
-                Title = "Open Image"
-            };
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
+                _loadedImage = _fileManager.OpenFile();
+                if (_loadedImage != null)
                 {
-                    loadedImage = new Bitmap(openFileDialog.FileName);
-                    shapeList.SetImage(loadedImage);
+                    _shapeList.SetImage(_loadedImage);
                     pictureBox.Invalidate();
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -184,9 +158,9 @@ namespace GraphicEditor
 
         private void PictureBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && isDrawing && currentShape is BrokenLine)
+            if (e.Button == MouseButtons.Left && _isDrawing && _currentShape is BrokenLine)
             {
-                isBrokenDrawing = false;
+                _isBrokenDrawing = false;
             }
         }
 
@@ -195,7 +169,7 @@ namespace GraphicEditor
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Filter = "DLL Files|*.dll",
-                Title = "Выберите плагин"
+                Title = "Load plugin"
             };
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -212,8 +186,8 @@ namespace GraphicEditor
 
         private void OnShapeButtonClicked(string shapeType)
         {
-            currentShapeType = shapeType;
-            shape = factory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
+            _currentShapeType = shapeType;
+            _shape = _factory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
         }
 
         private void SerializeToolStripMenuItemClick(object sender, EventArgs e)

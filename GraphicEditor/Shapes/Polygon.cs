@@ -8,17 +8,17 @@ namespace GraphicEditor
 {
     public class Polygon : CommonArr
     {
-        private int numSides;
-        private Point center;
-        private int width = 0;
-        private int height = 0;
+        private int _numSides;
+        private Point _center;
+        private int _width = 0;
+        private int _height = 0;
 
         public Polygon(Color penColor, Color brushColor, int penWidth, Point center, int numSides)
             : base(penColor, penWidth, center)
         {
             this.brushColor = brushColor;
-            this.numSides = numSides;
-            this.center = center;
+            this._numSides = numSides;
+            this._center = center;
         }
 
         private List<Point> GeneratePolygonPoints(Point center, int width, int height, int numSides)
@@ -49,9 +49,11 @@ namespace GraphicEditor
 
         public override void UpdateState(Point currentPos)
         {
-            width = Math.Abs(currentPos.X - center.X) * 2;
-            height = Math.Abs(currentPos.Y - center.Y) * 2;
-            points = GeneratePolygonPoints(center, width, height, numSides);
+            _width = Math.Abs(currentPos.X - _center.X) * 2;
+            _height = Math.Abs(currentPos.Y - _center.Y) * 2;
+            points = GeneratePolygonPoints(_center, _width, _height, _numSides);
         }
+
+        public override Shape Clone() => base.Clone();
     }
 }

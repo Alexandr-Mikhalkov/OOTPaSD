@@ -21,5 +21,7 @@ namespace GraphicEditor
                 g.DrawRectangle(pen, rect);
             }
         }
+
+        public override Shape Clone() => base.Clone();
     }
 }

@@ -8,19 +8,19 @@ namespace StarPlugin
 {
     public class Star : CommonArr
     {
-        private int numPoints;
-        private Point center;
-        private int outerRadius;
-        private int innerRadius;
+        private int _numPoints;
+        private Point _center;
+        private int _outerRadius;
+        private int _innerRadius;
 
         public Star(Color penColor, Color brushColor, int penWidth, Point center, int numPoints, int outerRadius, int innerRadius)
             : base(penColor, penWidth, center)
         {
             this.brushColor = brushColor;
-            this.numPoints = numPoints;
-            this.center = center;
-            this.outerRadius = outerRadius;
-            this.innerRadius = innerRadius;
+            this._numPoints = numPoints;
+            this._center = center;
+            this._outerRadius = outerRadius;
+            this._innerRadius = innerRadius;
             points = GenerateStarPoints(center, outerRadius, innerRadius, numPoints);
         }
 
@@ -53,9 +53,11 @@ namespace StarPlugin
 
         public override void UpdateState(Point currentPos)
         {
-            outerRadius = Math.Abs(currentPos.X - center.X);
-            innerRadius = outerRadius / 2;
-            points = GenerateStarPoints(center, outerRadius, innerRadius, numPoints);
+            _outerRadius = Math.Abs(currentPos.X - _center.X);
+            _innerRadius = _outerRadius / 2;
+            points = GenerateStarPoints(_center, _outerRadius, _innerRadius, _numPoints);
         }
+
+        public override Shape Clone() => base.Clone();
     }
 }

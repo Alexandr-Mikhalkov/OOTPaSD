@@ -29,5 +29,7 @@ namespace GraphicEditor
         }
 
         public abstract override void Draw(Graphics g);
+
+        public override Shape Clone() => (CommonRec)MemberwiseClone();
     }
 }

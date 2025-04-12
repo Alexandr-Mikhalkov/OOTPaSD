@@ -77,7 +77,7 @@
             // pictureBox
             // 
             pictureBox.BackColor = Color.White;
-            pictureBox.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox.BorderStyle = BorderStyle.Fixed3D;
             pictureBox.Location = new Point(115, 196);
             pictureBox.Name = "pictureBox";
             pictureBox.Size = new Size(955, 554);

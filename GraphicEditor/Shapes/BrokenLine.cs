@@ -23,5 +23,7 @@ namespace GraphicEditor
                 }
             }
         }
+
+        public override Shape Clone() => base.Clone();
     }
 }

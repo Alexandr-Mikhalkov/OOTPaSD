@@ -1,40 +1,41 @@
-﻿using GraphicEditor;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GraphicEditor
 {
     public class ShapeManager
     {
-        private Stack<List<Shape>> undoStack = new Stack<List<Shape>>();
-        private Stack<List<Shape>> redoStack = new Stack<List<Shape>>();
+        private Stack<Shape> _undoStack = new Stack<Shape>();
+        private Stack<Shape> _redoStack = new Stack<Shape>();
+        private ShapeList _shapeList;
 
-        public void PushToUndo(List<Shape> shapes)
+        public ShapeManager(ShapeList shapeList)
         {
-            undoStack.Push([.. shapes]);
-            ClearRedo();
+            _shapeList = shapeList;
         }
 
-        public List<Shape> Undo(List<Shape> currentShapes)
+        public void AddShape(Shape shape)
         {
-            if (undoStack.Count == 0)
-                return [.. currentShapes];
-
-            redoStack.Push([.. currentShapes]);
-            return undoStack.Pop();
+            _shapeList.AddShape(shape.Clone());
+            _undoStack.Push(shape.Clone());
+            _redoStack.Clear();
         }
 
-        public List<Shape> Redo(List<Shape> currentShapes)
+        public void Undo()
         {
-            if (redoStack.Count == 0)
-                return [.. currentShapes];
+            if (_undoStack.Count == 0) return;
 
-            undoStack.Push([.. currentShapes]);
-            return redoStack.Pop();
+            var lastShape = _undoStack.Pop();
+            _shapeList.RemoveShape();
+            _redoStack.Push(lastShape);
         }
 
-        public void ClearRedo()
+        public void Redo()
         {
-            redoStack.Clear();
+            if (_redoStack.Count == 0) return;
+
+            var restoredShape = _redoStack.Pop();
+            _shapeList.AddShape(restoredShape.Clone());
+            _undoStack.Push(restoredShape.Clone());
         }
     }
 }

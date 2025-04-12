@@ -18,5 +18,6 @@ namespace GraphicEditor
 
         public abstract void Draw(Graphics g);
         public abstract void UpdateState(Point currentPos);
+        public abstract Shape Clone();
     }
 }

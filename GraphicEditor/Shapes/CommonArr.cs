@@ -25,5 +25,12 @@ namespace GraphicEditor
         }
 
         public abstract override void Draw(Graphics g);
+        
+        public override Shape Clone()
+        {
+            var clone = (CommonArr)MemberwiseClone();
+            clone.points = new List<Point>(this.points);
+            return clone;
+        }
     }
 }

@@ -1,49 +1,45 @@
 ﻿using System.Drawing;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphicEditor
 {
     public class ShapeList
     {
-        private List<Shape> shapes = new List<Shape>();
-        private Bitmap loadedImage;
+        private List<Shape> _shapes = new List<Shape>();
+        private Bitmap _loadedImage;
 
         public void AddShape(Shape shape)
         {
-            shapes.Add(shape);
+            _shapes.Add(shape.Clone());
+        }
+
+        public void RemoveShape()
+        {
+            _shapes.RemoveAt(_shapes.Count - 1);
         }
 
         public void Clear()
         {
-            shapes.Clear();
-        }
-
-        public void Draw(Graphics graphics)
-        {
-            if (loadedImage != null)
-            {
-                graphics.DrawImage(loadedImage, 0, 0);
-            }
-
-            foreach (var shape in shapes)
-            {
-                shape.Draw(graphics);
-            }
-        }
-
-        public List<Shape> GetShapes()
-        {
-            return [.. shapes];
-        }
-
-        public void SetShapes(List<Shape> newShapes)
-        {
-            shapes = [.. newShapes];
+            _shapes.Clear();
         }
 
         public void SetImage(Bitmap image)
         {
-            loadedImage = image;
+            _loadedImage = image;
+        }
+
+        public void Draw(Graphics graphics)
+        {
+            if (_loadedImage != null)
+            {
+                graphics.DrawImage(_loadedImage, 0, 0);
+            }
+
+            foreach (var shape in _shapes)
+            {
+                shape.Draw(graphics);
+            }
         }
     }
 }
