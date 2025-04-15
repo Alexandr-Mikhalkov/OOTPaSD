@@ -6,7 +6,7 @@ namespace GraphicEditor
         private static Button s_penColorButton;
         private static Button s_brushColorButton;
         private static Button s_activeColorButton;
-        private static int currentColorIndex = 0;
+        private static int s_currentColorIndex = 0;
 
         public static void CreateColorButtons(Panel panel)
         {
@@ -99,17 +99,17 @@ namespace GraphicEditor
             {
                 if (colorDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (currentColorIndex >= inactiveButtons.Count)
+                    if (s_currentColorIndex >= inactiveButtons.Count)
                     {
-                        currentColorIndex = 0;
+                        s_currentColorIndex = 0;
                     }
 
-                    Button targetButton = inactiveButtons[currentColorIndex];
+                    Button targetButton = inactiveButtons[s_currentColorIndex];
 
                     targetButton.BackColor = colorDialog.Color;
                     targetButton.Enabled = true;
 
-                    currentColorIndex++;
+                    s_currentColorIndex++;
                 }
             }
         }

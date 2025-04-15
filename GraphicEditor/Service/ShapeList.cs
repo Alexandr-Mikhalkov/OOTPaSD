@@ -41,5 +41,15 @@ namespace GraphicEditor
                 shape.Draw(graphics);
             }
         }
+
+        public List<Shape> GetShapes()
+        {
+            return _shapes.Select(shape => shape.Clone()).ToList();
+        }
+
+        public void SetShapes(List<Shape> shapes)
+        {
+            _shapes = shapes;
+        }
     }
 }

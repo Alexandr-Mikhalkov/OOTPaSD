@@ -1,4 +1,5 @@
-﻿using System.Drawing.Drawing2D;
+﻿using Newtonsoft.Json;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Reflection;
 using System.Windows.Forms;
@@ -9,6 +10,8 @@ namespace GraphicEditor
     {
         private ShapeList _shapeList = new ShapeList();
         private ShapeManager _shapeManager;
+        private Serialization _serialization = new Serialization();
+        private Deserialization _deserialization = new Deserialization();
         private FileManager _fileManager = new FileManager();
         private bool _isDrawing = false;
         private bool _isBrokenDrawing = false;
@@ -179,8 +182,6 @@ namespace GraphicEditor
                 PluginLoader pluginLoader = new PluginLoader();
                 pluginLoader.ShapeButtonClicked += OnShapeButtonClicked;
                 pluginLoader.LoadPluginFromFile(pluginFile, pluginPanel);
-                pluginLabel.Visible = true;
-                pluginPanel.BorderStyle = BorderStyle.FixedSingle;
             }
         }
 
@@ -192,12 +193,12 @@ namespace GraphicEditor
 
         private void SerializeToolStripMenuItemClick(object sender, EventArgs e)
         {
-            
+            _serialization.SaveShapes(_shapeList);
         }
 
         private void DeserializeToolStripMenuItemClick(object sender, EventArgs e)
         {
-           
+            _deserialization.LoadShapes(_factory, _shapeList, pictureBox, widthTrackBar, countTrackBar);
         }
     }
 }

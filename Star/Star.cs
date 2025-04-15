@@ -37,7 +37,10 @@ namespace StarPlugin
                 int y = center.Y + (int)(Math.Sin(angle) * radius);
                 starPoints.Add(new Point(x, y));
             }
-            starPoints.Add(starPoints[0]);
+            
+            if (starPoints.Count > 0)
+                starPoints.Add(starPoints[0]);
+
             return starPoints;
         }
 

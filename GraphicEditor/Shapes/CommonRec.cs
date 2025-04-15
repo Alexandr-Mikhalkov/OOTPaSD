@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Drawing;
 
 namespace GraphicEditor
 {
     public abstract class CommonRec : Shape
     {
-        protected int width = 0;
-        protected int height = 0;
+        public int width = 0;
+        public int height = 0;
         protected Point startPos;
 
         public CommonRec(Color penColor, Color brushColor, int penWidth, Point startPos)

@@ -6,7 +6,7 @@ namespace GraphicEditor
 {
     public class Line : CommonArr
     {
-        private Point _endPos { get; set; }
+        public Point endPos { get; set; }
 
         public Line(Color penColor, int penWidth, Point start)
             : base(penColor, penWidth, start)
@@ -18,13 +18,13 @@ namespace GraphicEditor
         {
             using (var pen = new Pen(penColor, penWidth))
             {
-                g.DrawLine(pen, position, _endPos);
+                g.DrawLine(pen, position, endPos);
             }
         }
 
         public override void UpdateState(Point currentPos)
         {
-            _endPos = currentPos;
+            endPos = currentPos;
         }
 
         public override Shape Clone() => base.Clone();

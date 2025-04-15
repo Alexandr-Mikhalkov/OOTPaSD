@@ -15,15 +15,23 @@ namespace GraphicEditor
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    using (Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height))
+                    try
                     {
-                        using (Graphics g = Graphics.FromImage(bmp))
+                        using (Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height))
                         {
-                            g.Clear(Color.White);
-                            shapeList.Draw(g);
-                            currentShape?.Draw(g);
+                            using (Graphics g = Graphics.FromImage(bmp))
+                            {
+                                g.Clear(Color.White);
+                                shapeList.Draw(g);
+                                currentShape?.Draw(g);
+                            }
+                            bmp.Save(saveFileDialog.FileName, ImageFormat.Jpeg);
                         }
-                        bmp.Save(saveFileDialog.FileName, ImageFormat.Jpeg);
+                        MessageBox.Show("Image saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error saving file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -38,7 +46,17 @@ namespace GraphicEditor
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    return new Bitmap(openFileDialog.FileName);
+                    try
+                    {
+                        var bitmap = new Bitmap(openFileDialog.FileName);
+                        MessageBox.Show("Image loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return bitmap;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error opening file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return null;
+                    }
                 }
             }
             return null;

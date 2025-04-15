@@ -6,7 +6,7 @@ namespace GraphicEditor
 {
     public abstract class CommonArr : Shape
     {
-        protected List<Point> points;
+        public List<Point> points;
 
         public CommonArr(Color penColor, int penWidth, Point startPoint) : base(penColor, penWidth)
         {

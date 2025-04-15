@@ -133,10 +133,10 @@
             pluginLabel.Size = new Size(69, 25);
             pluginLabel.TabIndex = 3;
             pluginLabel.Text = "Plugins";
-            pluginLabel.Visible = false;
             // 
             // pluginPanel
             // 
+            pluginPanel.BorderStyle = BorderStyle.FixedSingle;
             pluginPanel.Location = new Point(922, 5);
             pluginPanel.Name = "pluginPanel";
             pluginPanel.Size = new Size(253, 85);
