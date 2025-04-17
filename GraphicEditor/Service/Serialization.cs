@@ -9,7 +9,7 @@ namespace GraphicEditor
         {
             using (var saveDialog = new SaveFileDialog())
             {
-                saveDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+                saveDialog.Filter = Filters.jsonFilter;
                 saveDialog.Title = "Save shapes";
                 saveDialog.DefaultExt = "json";
 

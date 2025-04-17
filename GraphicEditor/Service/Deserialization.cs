@@ -11,7 +11,7 @@ namespace GraphicEditor
         {
             using (var openDialog = new OpenFileDialog())
             {
-                openDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+                openDialog.Filter = Filters.jsonFilter;
                 openDialog.Title = "Open file with shapes";
 
                 if (openDialog.ShowDialog() == DialogResult.OK)

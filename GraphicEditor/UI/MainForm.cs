@@ -169,19 +169,20 @@ namespace GraphicEditor
 
         private void LoadToolStripMenuItemClick(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                Filter = "DLL Files|*.dll",
-                Title = "Load plugin"
-            };
+                openFileDialog.Filter = Filters.dllFilter;
+                openFileDialog.Title = "Load plugin";
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string pluginFile = openFileDialog.FileName;
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string pluginFile = openFileDialog.FileName;
 
-                PluginLoader pluginLoader = new PluginLoader();
-                pluginLoader.ShapeButtonClicked += OnShapeButtonClicked;
-                pluginLoader.LoadPluginFromFile(pluginFile, pluginPanel);
+                    PluginLoader pluginLoader = new PluginLoader();
+                    pluginLoader.ShapeButtonClicked += OnShapeButtonClicked;
+                    pluginLoader.LoadPluginFromFile(pluginFile, pluginPanel);
+                }
+
             }
         }
 

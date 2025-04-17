@@ -48,7 +48,7 @@
             polygonButton = new Button();
             brokenLineButton = new Button();
             menuStrip = new MenuStrip();
-            файлToolStripMenuItem = new ToolStripMenuItem();
+            fileToolStripMenuItem = new ToolStripMenuItem();
             newToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
@@ -283,26 +283,26 @@
             // menuStrip
             // 
             menuStrip.ImageScalingSize = new Size(24, 24);
-            menuStrip.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, pluginsToolStripMenuItem, undoToolStripMenuItem, redoToolStripMenuItem });
+            menuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, pluginsToolStripMenuItem, undoToolStripMenuItem, redoToolStripMenuItem });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
             menuStrip.Size = new Size(1184, 33);
             menuStrip.TabIndex = 3;
             menuStrip.Text = "menuStrip1";
             // 
-            // файлToolStripMenuItem
+            // fileToolStripMenuItem
             // 
-            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, toolStripSeparator1, saveToolStripMenuItem, serializeToolStripMenuItem, deserializeToolStripMenuItem });
-            файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            файлToolStripMenuItem.Size = new Size(54, 29);
-            файлToolStripMenuItem.Text = "File";
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, toolStripSeparator1, saveToolStripMenuItem, serializeToolStripMenuItem, deserializeToolStripMenuItem });
+            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            fileToolStripMenuItem.Size = new Size(54, 29);
+            fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Image = (Image)resources.GetObject("newToolStripMenuItem.Image");
             newToolStripMenuItem.Name = "newToolStripMenuItem";
             newToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
-            newToolStripMenuItem.Size = new Size(256, 34);
+            newToolStripMenuItem.Size = new Size(270, 34);
             newToolStripMenuItem.Text = "New";
             // 
             // openToolStripMenuItem
@@ -310,21 +310,21 @@
             openToolStripMenuItem.Image = (Image)resources.GetObject("openToolStripMenuItem.Image");
             openToolStripMenuItem.Name = "openToolStripMenuItem";
             openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            openToolStripMenuItem.Size = new Size(256, 34);
+            openToolStripMenuItem.Size = new Size(270, 34);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += OpenFile;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(253, 6);
+            toolStripSeparator1.Size = new Size(267, 6);
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Image = (Image)resources.GetObject("saveToolStripMenuItem.Image");
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(256, 34);
+            saveToolStripMenuItem.Size = new Size(270, 34);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += SaveFile;
             // 
@@ -333,7 +333,7 @@
             serializeToolStripMenuItem.Image = (Image)resources.GetObject("serializeToolStripMenuItem.Image");
             serializeToolStripMenuItem.Name = "serializeToolStripMenuItem";
             serializeToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.S;
-            serializeToolStripMenuItem.Size = new Size(256, 34);
+            serializeToolStripMenuItem.Size = new Size(270, 34);
             serializeToolStripMenuItem.Text = "Serialize";
             serializeToolStripMenuItem.Click += SerializeToolStripMenuItemClick;
             // 
@@ -342,7 +342,7 @@
             deserializeToolStripMenuItem.Image = (Image)resources.GetObject("deserializeToolStripMenuItem.Image");
             deserializeToolStripMenuItem.Name = "deserializeToolStripMenuItem";
             deserializeToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.D;
-            deserializeToolStripMenuItem.Size = new Size(256, 34);
+            deserializeToolStripMenuItem.Size = new Size(270, 34);
             deserializeToolStripMenuItem.Text = "Deserialize";
             deserializeToolStripMenuItem.Click += DeserializeToolStripMenuItemClick;
             // 
@@ -460,7 +460,7 @@
         private Panel colorPanel;
         private Label colorLabel;
         private TrackBar widthTrackBar;
-        private ToolStripMenuItem файлToolStripMenuItem;
+        private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem undoToolStripMenuItem;
         private ToolStripMenuItem redoToolStripMenuItem;
         private ToolStripMenuItem newToolStripMenuItem;

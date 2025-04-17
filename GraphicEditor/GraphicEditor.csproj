@@ -28,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="UI\Images\Icon.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     <None Update="UI\Images\Plugin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

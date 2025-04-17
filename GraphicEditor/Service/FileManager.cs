@@ -10,7 +10,7 @@ namespace GraphicEditor
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                saveFileDialog.Filter = "JPEG Image|*.jpg";
+                saveFileDialog.Filter = Filters.jpegFilter;
                 saveFileDialog.Title = "Save image";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -41,7 +41,7 @@ namespace GraphicEditor
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "JPEG Image|*.jpg|All Files|*.*";
+                openFileDialog.Filter = Filters.jpegFilter;
                 openFileDialog.Title = "Open image";
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
