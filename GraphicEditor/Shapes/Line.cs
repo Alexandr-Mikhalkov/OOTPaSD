@@ -4,12 +4,12 @@ using System.Text.Json.Serialization;
 
 namespace GraphicEditor
 {
-    public class Line : CommonArr
+    public class Line : Shape
     {
         public Point endPos { get; set; }
 
         public Line(Color penColor, int penWidth, Point start)
-            : base(penColor, penWidth, start)
+            : base(penColor, penWidth)
         {
             this.position = start;
         }
@@ -27,6 +27,9 @@ namespace GraphicEditor
             endPos = currentPos;
         }
 
-        public override Shape Clone() => base.Clone();
+        public override Shape Clone()
+        {
+            return (Shape)MemberwiseClone();
+        }
     }
 }

@@ -37,5 +37,15 @@ namespace GraphicEditor
             _shapeList.AddShape(restoredShape.Clone());
             _undoStack.Push(restoredShape.Clone());
         }
+
+        public void UndoClear()
+        {
+            _undoStack.Clear();
+        }
+
+        public void RedoClear()
+        {
+            _redoStack.Clear();
+        }
     }
 }
