@@ -200,8 +200,7 @@ namespace GraphicEditor
         private void DeserializeToolStripMenuItemClick(object sender, EventArgs e)
         {
             _deserialization.LoadShapes(_factory, _shapeList, pictureBox, widthTrackBar, countTrackBar);
-            _shapeManager.UndoClear();
-            _shapeManager.RedoClear();
+            _shapeManager.InitializeUndoStack(_shapeList.GetShapes());
         }
     }
 }

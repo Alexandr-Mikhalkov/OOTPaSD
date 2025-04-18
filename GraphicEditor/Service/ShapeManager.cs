@@ -38,13 +38,12 @@ namespace GraphicEditor
             _undoStack.Push(restoredShape.Clone());
         }
 
-        public void UndoClear()
+        public void InitializeUndoStack(List<Shape> shapes)
         {
-            _undoStack.Clear();
-        }
-
-        public void RedoClear()
-        {
+            for (int i = 0; i < shapes.Count; i++)
+            {
+                _undoStack.Push(shapes[i].Clone());
+            }
             _redoStack.Clear();
         }
     }
