@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarPlugin", "..\Star\StarP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrianglePlugin", "..\Triangle\TrianglePlugin.csproj", "{91D2EF5D-1F56-4329-95AE-CBE18CB31EFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrapezoidPlugin", "..\Trapezoid\TrapezoidPlugin.csproj", "{B62329AA-B8B8-45C7-95EF-64F04B4AA692}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +29,15 @@ Global
 		{91D2EF5D-1F56-4329-95AE-CBE18CB31EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91D2EF5D-1F56-4329-95AE-CBE18CB31EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91D2EF5D-1F56-4329-95AE-CBE18CB31EFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B62329AA-B8B8-45C7-95EF-64F04B4AA692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B62329AA-B8B8-45C7-95EF-64F04B4AA692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B62329AA-B8B8-45C7-95EF-64F04B4AA692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B62329AA-B8B8-45C7-95EF-64F04B4AA692}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE5E0D5E-1E96-4828-AAD3-F733983E4AE2}
 	EndGlobalSection
 EndGlobal
