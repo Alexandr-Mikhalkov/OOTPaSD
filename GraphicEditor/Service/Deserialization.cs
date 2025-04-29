@@ -1,5 +1,8 @@
+using GraphicEditor.Properties;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Specialized;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -7,7 +10,21 @@ namespace GraphicEditor
 {
     public class Deserialization
     {
-        public void LoadShapes(ShapeFactory factory, ShapeList shapeList, PictureBox pictureBox, TrackBar widthTrackBar, TrackBar countTrackBar)
+        private List<string> _currShapeTypes;
+
+        public Deserialization()
+        {
+            _currShapeTypes = new List<string>();
+            foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
+            {
+                if (typeof(Shape).IsAssignableFrom(type) && !type.IsAbstract)
+                {
+                    _currShapeTypes.Add(type.Name);
+                }
+            }
+        }
+
+        public void LoadShapes(ShapeFactory factory, ShapeList shapeList, PictureBox pictureBox, TrackBar widthTrackBar, TrackBar countTrackBar, Panel pluginPanel, Action<string> shapeClickHandler)
         {
             using (var openDialog = new OpenFileDialog())
             {
@@ -18,34 +35,32 @@ namespace GraphicEditor
                 {
                     try
                     {
-                        string pluginRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
+                        string json = File.ReadAllText(openDialog.FileName);
 
-                        var pluginDirs = Directory.GetDirectories(pluginRoot)
-                            .Where(dir =>
-                            {
-                                var name = Path.GetFileName(dir);
-                                return !name.StartsWith(".") && Directory.Exists(Path.Combine(dir, "bin"));
-                            });
+                        var requiredTypes = JArray.Parse(json).Select(j => j["ShapeType"]?.ToString()).Distinct().Where(t => !string.IsNullOrEmpty(t))
+                            .ToList();
 
-                        var pluginDlls = pluginDirs
-                            .SelectMany(projectDir =>
-                                Directory.GetDirectories(Path.Combine(projectDir, "bin"), "*", SearchOption.AllDirectories)
-                                    .SelectMany(binDir => Directory.GetFiles(binDir, "*.dll", SearchOption.TopDirectoryOnly)))
-                            .Distinct();
+                        var pluginTypes = requiredTypes.Where(t => !_currShapeTypes.Contains(t))
+                            .ToList();
 
-                        foreach (var dll in pluginDlls)
+                        var pluginPaths = Settings.Default.PluginPaths??= new StringCollection();
+                        var pluginLoader = new PluginLoader();
+                        pluginLoader.ShapeButtonClicked += shapeClickHandler;
+
+                        foreach (var typeName in pluginTypes)
                         {
-                            try
+                            var pluginPath = pluginPaths.Cast<string>()
+                                .FirstOrDefault(p => Path.GetFileName(p).IndexOf(typeName, StringComparison.OrdinalIgnoreCase) >= 0);
+
+                            if (pluginPath != null && File.Exists(pluginPath))
                             {
-                                var asm = Assembly.LoadFrom(dll);
+                                pluginLoader.LoadPluginFromFile(pluginPath, pluginPanel);
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                MessageBox.Show($"Failed to load {dll}:\n{ex.Message}");
+                                throw new FileNotFoundException($"Plugin for '{typeName}' not found");
                             }
                         }
-
-                        string json = File.ReadAllText(openDialog.FileName);
 
                         var settings = new JsonSerializerSettings
                         {
@@ -56,7 +71,7 @@ namespace GraphicEditor
 
                         var shapeFactory = factory.InitializeShapeFactory(ColorButtonCreator.PenColorButton, ColorButtonCreator.BrushColorButton, widthTrackBar, countTrackBar);
                         var restoredShapes = new List<Shape>();
-
+                       
                         foreach (var shapeD in shapeDatas)
                         {
                             if (shapeFactory.TryGetValue(shapeD.ShapeType, out var constructor))

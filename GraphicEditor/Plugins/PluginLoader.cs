@@ -1,3 +1,4 @@
+using GraphicEditor.Properties;
 using System.Reflection;
 
 namespace GraphicEditor
@@ -37,6 +38,12 @@ namespace GraphicEditor
 
                     shapePanel.Controls.Add(shapeButton);
                     shapePanel.Controls.Add(shapeLabel);
+                }
+
+                if (!Settings.Default.PluginPaths.Contains(pluginFile))
+                {
+                    Settings.Default.PluginPaths.Add(pluginFile);
+                    Settings.Default.Save(); 
                 }
             }
             catch (Exception ex)

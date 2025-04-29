@@ -136,7 +136,7 @@ namespace GraphicEditor
         {
             try
             {
-                _loadedImage = _fileManager.OpenFile();
+                var _loadedImage = _fileManager.OpenFile();
                 if (_loadedImage != null)
                 {
                     _shapeList.SetImage(_loadedImage);
@@ -199,7 +199,7 @@ namespace GraphicEditor
 
         private void DeserializeToolStripMenuItemClick(object sender, EventArgs e)
         {
-            _deserialization.LoadShapes(_factory, _shapeList, pictureBox, widthTrackBar, countTrackBar);
+            _deserialization.LoadShapes(_factory, _shapeList, pictureBox, widthTrackBar, countTrackBar, pluginPanel, OnShapeButtonClicked);
             _shapeManager.InitializeUndoStack(_shapeList.GetShapes());
         }
     }
